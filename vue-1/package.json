@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "dependencies": {
+    "director": "^1.2.0",
+    "vue": "^1.0.1",
+    "todomvc-common": "^1.0.1",
+    "todomvc-app-css": "^2.0.0"
+  },
+  "scripts": {
+  	"start": "echo 'asdf'",
+    "install": "browserify-hmr -e src/main.js -o dist/build.js & http-server -c 1 -a localhost",
+    "build": "cross-env NODE_ENV=production browserify -e src/main.js | uglifyjs -c warnings=false -m > dist/build.js",
+    "lint": "eslint --ext .js,.vue src",
+    "test": "karma start karma.conf.js"
+  },
+  "browserify": {
+    "transform": [
+      "vueify",
+      "babelify"
+    ]
+  }
+}

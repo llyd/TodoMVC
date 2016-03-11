@@ -61,6 +61,17 @@ var app = app || {};
 
 			},
 			
+			save: function (todoToSave, text) {
+				var todolist = this.props.todolist;
+				this.props.model.save(todolist,todoToSave, text);
+			},
+
+			destroy: function (todo) {
+				var todolist = this.props.todolist;
+				this.props.model.destroy(todolist,todo);
+			},
+
+
 			render: function () {
 				var todolist = this.props.todolist;
 				var TodoItem = app.TodoItem;
@@ -82,9 +93,12 @@ var app = app || {};
 				var todoItems = showTodos.map(function (todo) {
 					return (
 						<TodoItem 
+						    key={todo.id}
 							todo={todo}
 							onToggle={this.toggle.bind(this, todo)}
 							onEdit={this.edit.bind(this,todo)}
+							onSave={this.save.bind(this, todo)}
+							onDestroy={this.destroy.bind(this, todo)}
 						/>
 						);
 				}, this);

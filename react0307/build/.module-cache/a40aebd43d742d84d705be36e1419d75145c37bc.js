@@ -4,7 +4,7 @@ var app = app || {};
 	var appModel = app.TodoModel;
 	
 	var ENTER_KEY = 13;
-	var Todolists = React.createClass({
+	var Todolists = React.createClass({displayName: "Todolists",
 
 		getInitialState: function(){
 			return {
@@ -34,24 +34,24 @@ var app = app || {};
 			var showTodoList = this.props.model.todoLists;
 			var todoLists = showTodoList.map(function (todolist) {
 				return (
-					<Todoapp todolist={todolist}
-								model={model}
-					/>
+					React.createElement(Todoapp, {todolist: todolist, 
+								model: model}
+					)
 					)
 			})
 
 			return (
-				<div>
-					<input  placeholder="Your todoapp name ..."
-							className="new-todo"
-							autoFocus={true}
-							type="text"
-							onKeyDown={this.addNewList}
-							value={this.state.newName}
-							onChange={this.handleNameChange}
-					/>
-					{todoLists}
-				</div>
+				React.createElement("div", null, 
+					React.createElement("input", {placeholder: "Your todoapp name ...", 
+							className: "new-todo", 
+							autoFocus: true, 
+							type: "text", 
+							onKeyDown: this.addNewList, 
+							value: this.state.newName, 
+							onChange: this.handleNameChange}
+					), 
+					todoLists
+				)
 				);
 		}
 	});
@@ -60,11 +60,11 @@ var app = app || {};
 
 	function render() {
 		ReactDOM.render(
-			<Todolists model={model} />,
+			React.createElement(Todolists, {model: model}),
 			document.getElementsByClassName('todoapp')[0]);
 	}
 
-    model.subscribe(render);
+    // model.subscribe(render);
 	render();
 
 

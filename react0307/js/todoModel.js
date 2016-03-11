@@ -9,10 +9,18 @@ var app = app || {};
 	app.TodoModel = function (key) {
 		this.key = key;
 		this.todoLists = Utils.findTodoLists(key);
+		this.onChanges = [];
+	};
+
+	app.TodoModel.prototype.subscribe = function (onChange) {
+		console.log(onChange,"onChange");
+		this.onChanges.push(onChange);
 	};
 
 	app.TodoModel.prototype.inform = function () {
 		Utils.store(this.key,this.todoLists);
+		this.onChanges.forEach(function (cb) { cb(); });
+		console.log("inform");
 	};
 
 	app.TodoModel.prototype.addTodoName = function (val) {
@@ -37,6 +45,63 @@ var app = app || {};
 			return list;
 		});
 		this.inform();
-	}
+	};
+
+	app.TodoModel.prototype.destroyTodolist = function (todolistId) {
+		this.todoLists = this.todoLists.filter(function(list){
+			if(list.id === todolistId) {
+				return false;
+			}
+			return true;
+		});
+		this.inform();
+	};
+
+	app.TodoModel.prototype.toggle = function (todolist,todoToToggle) {
+		this.todoLists = this.todoLists.map(function(list){
+			if(list.id === todolist.id) {
+				list.todos = list.todos.map(function(todo){
+					if(todo.id === todoToToggle.id){
+						todo.completed = !todo.completed;
+					}
+					return todo;
+				})
+			}
+			return list;
+		});
+		this.inform();
+	};
+
+	app.TodoModel.prototype.save = function (todolist,todoToSave,text) {
+		todoToSave.title = text;
+		this.todoLists = this.todoLists.map(function(list){
+			if(list.id === todolist.id) {
+				list.todos = list.todos.map(function(todo){
+					if(todo.id === todoToSave.id){
+						return todoToSave;
+					}
+					return todo;
+				})
+			}
+			return list;
+		});
+		this.inform();
+	};
+
+	app.TodoModel.prototype.destroy = function (todolist,todoToDestroy) {
+		this.todoLists = this.todoLists.map(function(list){
+			if(list.id === todolist.id) {
+				list.todos = list.todos.filter(function(todo){
+					if(todo.id === todoToSave.id){
+						return false;
+					}
+					return true;
+				})
+			}
+			return list;
+		});
+		this.inform();
+	};
+
 })()
 

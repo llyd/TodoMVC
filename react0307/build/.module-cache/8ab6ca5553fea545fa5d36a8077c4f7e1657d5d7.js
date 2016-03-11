@@ -50,12 +50,12 @@ app.TodoItem = React.createClass({displayName: "TodoItem",
 	},
 
 	render: function () {
-		// var cx = React.addons.classSet;
-		// 	var cheackClass = cx({
-		// 	'completedLabel':this.props.todo.completed
-		// 	});
+		var cx = React.addons.classSet;
+			var cheackClass = cx({
+			'completedLabel':this.props.todo.completed
+			});
 
-		var cheackClass = this.props.todo.completed ? 'completedLabel':'UnCompletedLabel';
+		//var cheackClass = this.props.todo.completed ? 'completedLabel':'UnCompletedLabel';
 		return (
 				React.createElement("li", null, 
 					React.createElement("div", {className: this.state.view}, 

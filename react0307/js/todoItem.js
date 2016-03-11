@@ -27,10 +27,14 @@ app.TodoItem = React.createClass({
 
 	handleSubmit: function (event) {
 		var val = this.state.editText.trim();
-		//???数据提交
-		this.setState({editText: val,
+		if(val) {
+			this.setState({editText: val,
 						edit : 'edit',
 						view : 'view'});
+			this.props.onSave(val);
+		} else {
+			this.props.onDestroy();
+		}
 	},
 
 	handleKeyDown: function (event) {
@@ -46,6 +50,11 @@ app.TodoItem = React.createClass({
 	},
 
 	render: function () {
+		// var cx = React.addons.classSet;
+		// 	var cheackClass = cx({
+		// 	'completedLabel':this.props.todo.completed
+		// 	});
+
 		var cheackClass = this.props.todo.completed ? 'completedLabel':'UnCompletedLabel';
 		return (
 				<li>

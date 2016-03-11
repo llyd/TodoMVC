@@ -9,18 +9,11 @@ var app = app || {};
 	app.TodoModel = function (key) {
 		this.key = key;
 		this.todoLists = Utils.findTodoLists(key);
-		this.onChanges = [];
-	};
-
-	app.TodoModel.prototype.subscribe = function (onChange) {
-		console.log(onChange,"onChange");
-		this.onChanges.push(onChange);
 	};
 
 	app.TodoModel.prototype.inform = function () {
 		Utils.store(this.key,this.todoLists);
-		this.onChanges.forEach(function (cb) { cb(); });
-		console.log("inform");
+		//this.onChanges.forEach(function (cb) { cb(); });
 	};
 
 	app.TodoModel.prototype.addTodoName = function (val) {

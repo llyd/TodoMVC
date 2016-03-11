@@ -93,7 +93,6 @@ var app = app || {};
 				var todoItems = showTodos.map(function (todo) {
 					return (
 						React.createElement(TodoItem, {
-						    key: todo.id, 
 							todo: todo, 
 							onToggle: this.toggle.bind(this, todo), 
 							onEdit: this.edit.bind(this,todo), 

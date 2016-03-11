@@ -57,7 +57,7 @@ app.TodoItem = React.createClass({displayName: "TodoItem",
 
 		var cheackClass = this.props.todo.completed ? 'completedLabel':'UnCompletedLabel';
 		return (
-				React.createElement("li", null, 
+				React.createElement("li", {key: this.props.todo.id}, 
 					React.createElement("div", {className: this.state.view}, 
 						React.createElement("input", {type: "checkbox", 
 							   className: "toggle", 
